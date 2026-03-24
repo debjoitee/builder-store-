@@ -1,24 +1,39 @@
+import { db } from "./firebase.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const container = document.getElementById("products");
+
 async function loadProducts() {
-  console.log("Fetching data...");
+  container.innerHTML = "Loading...";
 
-  const res = await fetch("/api/getProducts");
-  const products = await res.json();
+  try {
+    const snapshot = await getDocs(collection(db, "products"));
 
-  console.log(products);
+    container.innerHTML = "";
 
-  const container = document.getElementById("products");
-  container.innerHTML = "";
+    snapshot.forEach(doc => {
+      const p = doc.data();
 
-  products.forEach(p => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${p.image}" width="100%">
-        <h3>${p.name}</h3>
-        <p>₹${p.price}</p>
-        <p>Stock: ${p.stock}</p>
-      </div>
-    `;
-  });
+      container.innerHTML += `
+        <div class="card">
+          <img src="${p.image}" width="100%">
+          <h3>${p.name}</h3>
+          <p>₹${p.price}</p>
+          <p>Stock: ${p.stock}</p>
+          <button onclick="orderNow('${p.name}')">Order on WhatsApp</button>
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Error loading products";
+  }
 }
+
+window.orderNow = function(name) {
+  const msg = `I want to order ${name}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+};
 
 loadProducts();

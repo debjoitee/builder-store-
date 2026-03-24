@@ -1,18 +1,21 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { initializeApp, cert } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCOK66hRh1s6U4P8xuuim9zup6tr7maaV8",
-  authDomain: "builder-store-19a9f.firebaseapp.com",
-  projectId: "builder-store-19a9f",
-};
+if (!global._firebaseApp) {
+  global._firebaseApp = initializeApp({
+    credential: cert({
+      projectId: "builder-store-19a9f",
+      clientEmail: "your-service-account-email",
+      privateKey: "your-private-key".replace(/\\n/g, "\n"),
+    }),
+  });
+}
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getFirestore();
 
 export default async function handler(req, res) {
   try {
-    const snapshot = await getDocs(collection(db, "products"));
+    const snapshot = await db.collection("products").get();
 
     const products = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -23,4 +26,5 @@ export default async function handler(req, res) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+}npm init -y
+npm install firebase-admin
