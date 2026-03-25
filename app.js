@@ -17,24 +17,28 @@ const db  = getFirestore(app);
 let allProducts = [];
 
 // ── Toast helper ──────────────────────────────────────────────────
-function showToast(msg, type = "info") {
+window.showToast = function(msg, type = "info") {
   const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = `toast ${type} show`;
-  setTimeout(() => { t.className = "toast"; }, 3000);
-}
+  if(t) {
+      t.textContent = msg;
+      t.className = `toast ${type} show`;
+      setTimeout(() => { t.className = "toast"; }, 3000);
+  }
+};
 
 // ── Stock badge helper ────────────────────────────────────────────
 function stockBadge(stock) {
-  if (stock <= 0)  return `<span class="stock-badge out">Out of Stock</span>`;
-  if (stock < 10)  return `<span class="stock-badge low">Low Stock</span>`;
-  return `<span class="stock-badge in">In Stock</span>`;
+  if (stock <= 0)  return `<span class="stock-badge out" style="color:red;">Out of Stock</span>`;
+  if (stock < 10)  return `<span class="stock-badge low" style="color:orange;">Low Stock</span>`;
+  return `<span class="stock-badge in" style="color:green;">In Stock</span>`;
 }
 
 // ── Render product cards ──────────────────────────────────────────
 function displayProducts(products) {
   const container = document.getElementById("products");
   const countEl   = document.getElementById("productCount");
+
+  if (!container || !countEl) return; // Prevent crashes if HTML isn't loaded
 
   if (products.length === 0) {
     countEl.textContent = "0 items";
@@ -71,7 +75,7 @@ function displayProducts(products) {
   `).join("");
 }
 
-// ── Load from Firebase (unchanged logic) ─────────────────────────
+// ── Load from Firebase ─────────────────────────
 async function loadProducts() {
   try {
     const snapshot = await getDocs(collection(db, "products"));
@@ -80,22 +84,28 @@ async function loadProducts() {
     displayProducts(allProducts);
   } catch (err) {
     console.error(err);
-    document.getElementById("products").innerHTML =
-      `<div class="empty-state"><p>Error loading products. Check Firebase config.</p></div>`;
-    document.getElementById("productCount").textContent = "Error";
+    const container = document.getElementById("products");
+    if(container) {
+        container.innerHTML = `<div class="empty-state"><p>Error loading products. Check Firebase config.</p></div>`;
+    }
+    const countEl = document.getElementById("productCount");
+    if(countEl) countEl.textContent = "Error";
   }
 }
 
-// ── Search filter (unchanged logic) ──────────────────────────────
-document.getElementById("search").addEventListener("input", e => {
-  const val = e.target.value.toLowerCase();
-  const filtered = allProducts.filter(p =>
-    p.name.toLowerCase().includes(val)
-  );
-  displayProducts(filtered);
-});
+// ── Search filter ──────────────────────────────
+const searchInput = document.getElementById("search");
+if (searchInput) {
+    searchInput.addEventListener("input", e => {
+      const val = e.target.value.toLowerCase();
+      const filtered = allProducts.filter(p =>
+        p.name.toLowerCase().includes(val)
+      );
+      displayProducts(filtered);
+    });
+}
 
-// ── WhatsApp order (unchanged logic) ─────────────────────────────
+// ── WhatsApp order ─────────────────────────────
 window.orderNow = function(name, price) {
   const msg = `Hi! I want to order *${name}* (₹${price}/unit) from Builder's Store.`;
   window.open(`https://wa.me/918116916732?text=${encodeURIComponent(msg)}`, "_blank");
