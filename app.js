@@ -87,7 +87,7 @@ document.getElementById("search").addEventListener("input", e => {
 // ── WhatsApp order (unchanged logic) ─────────────────────────────
 window.orderNow = function(name, price) {
   const msg = `Hi! I want to order *${name}* (₹${price}/unit) from Builder's Store.`;
-  window.open(`https://wa.me/+918116916732?text=${encodeURIComponent(msg)}`, "_blank");
+  window.open(`https://wa.me/918116916732?text=${encodeURIComponent(msg)}`, "_blank");
 };
 
 // ── Init ──────────────────────────────────────────────────────────
