@@ -1,18 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Builder's Store</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Admin Login</h2>
+  <div class="auth-page">
+    <div class="auth-card">
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+      <div class="auth-logo">
+        <div class="logo-icon">BS</div>
+        <h2>Admin Access</h2>
+        <p>Builder's Store Control Panel</p>
+      </div>
 
-<button onclick="login()">Login</button>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="admin@youremail.com" autocomplete="email">
+      </div>
 
-<script type="module" src="login.js"></script>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
 
+      <button onclick="login()" class="btn btn-primary btn-login">Login to Dashboard</button>
+
+      <div class="auth-err" id="authErr">Invalid credentials. Please try again.</div>
+
+    </div>
+  </div>
+
+  <script type="module" src="login.js"></script>
 </body>
 </html>

@@ -1,22 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Builder's Store</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h2>📊 Dashboard</h2>
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">BS</div>
+      <div class="logo-text">Builder's <span>Store</span></div>
+    </a>
+    <nav>
+      <a href="index.html">Public Site</a>
+      <a href="admin.html">Products</a>
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </nav>
+  </header>
 
-<div>
-    <h3>Total Products: <span id="totalProducts">0</span></h3>
-    <h3>Total Stock: <span id="totalStock">0</span></h3>
-    <h3>Total Value: ₹<span id="totalValue">0</span></h3>
-</div>
+  <!-- DASHBOARD -->
+  <div class="dashboard-wrap">
 
-<canvas id="chart" width="400" height="200"></canvas>
+    <div class="dash-title">Analytics <span>Dashboard</span></div>
 
-<script type="module" src="dashboard.js"></script>
+    <!-- STAT CARDS -->
+    <div class="dash-stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Products</div>
+        <div class="stat-value" id="totalProducts">—</div>
+        <div class="stat-sub">Items in catalogue</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Stock</div>
+        <div class="stat-value" id="totalStock">—</div>
+        <div class="stat-sub">Units available</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Inventory Value</div>
+        <div class="stat-value"><small>₹</small><span id="totalValue">—</span></div>
+        <div class="stat-sub">Estimated total value</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Low Stock Items</div>
+        <div class="stat-value" id="lowStockCount" style="color:#f97316">—</div>
+        <div class="stat-sub">Below 10 units</div>
+      </div>
+    </div>
 
+    <!-- CHART -->
+    <div class="chart-card">
+      <h4>Stock <span>Overview</span></h4>
+      <canvas id="chart" height="90"></canvas>
+    </div>
+
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>

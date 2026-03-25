@@ -1,28 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Panel</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — Builder's Store</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>Admin Panel</h2>
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">BS</div>
+      <div class="logo-text">Builder's <span>Store</span></div>
+    </a>
+    <nav>
+      <a href="index.html">Public Site</a>
+      <a href="admin.html" class="active">Products</a>
+      <a href="dashboard.html">Dashboard</a>
+      <button class="btn-logout" onclick="logout()">Logout</button>
+    </nav>
+  </header>
 
-<h3>Add Product</h3>
+  <!-- ADMIN LAYOUT -->
+  <div class="admin-layout">
 
-<input id="name" placeholder="Product Name"><br><br>
-<input id="price" placeholder="Price"><br><br>
-<input id="stock" placeholder="Stock"><br><br>
+    <!-- SIDEBAR: ADD PRODUCT FORM -->
+    <aside class="admin-sidebar">
+      <h3>Add <span>Product</span></h3>
 
-<input type="file" id="imageFile"><br><br>
+      <div class="admin-form">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" id="name" placeholder="e.g. Cement 50kg Bag">
+        </div>
 
-<button onclick="addProduct()">Add Product</button>
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" id="price" placeholder="e.g. 350">
+        </div>
 
-<hr>
+        <div class="form-group">
+          <label>Stock (units)</label>
+          <input type="number" id="stock" placeholder="e.g. 100">
+        </div>
 
-<h3>All Products</h3>
-<div id="adminProducts"></div>
+        <div class="form-group">
+          <label>Product Image</label>
+          <input type="file" id="imageFile" accept="image/*">
+          <div class="upload-progress" id="uploadProgress">
+            <div class="upload-bar" id="uploadBar"></div>
+          </div>
+        </div>
 
-<script type="module" src="admin.js"></script>
+        <button onclick="addProduct()" class="btn btn-primary btn-add-product">
+          + Add Product
+        </button>
+      </div>
+    </aside>
 
+    <!-- MAIN: PRODUCT LIST -->
+    <main class="admin-main">
+      <h3>All <span>Products</span></h3>
+      <div id="adminProducts">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <div>Loading products...</div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script type="module" src="admin.js"></script>
 </body>
 </html>
