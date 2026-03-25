@@ -142,15 +142,15 @@ onAuthStateChanged(auth, (user) => {
         }
     }
   // 🔹 Logout Function
-window.logout = async function() {
-    if(confirm("Are you sure you want to log out?")) {
-        try {
-            await signOut(auth);
-            alert("You have been successfully logged out.");
-            window.location.reload(); // Refreshes the page to lock it down again
-        } catch (error) {
-            alert("Error logging out: " + error.message);
-        }
-    }
-};
+  window.logout = async function() {
+      if(confirm("Are you sure you want to log out?")) {
+          try {
+              await signOut(auth);
+              alert("You have been successfully logged out.");
+              window.location.reload(); 
+          } catch (error) {
+              alert("Error logging out: " + error.message);
+          }
+      }
+  };
 });
