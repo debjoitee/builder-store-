@@ -3,7 +3,7 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } 
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword }
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // Your web app's Firebase configuration
